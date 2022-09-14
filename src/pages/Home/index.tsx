@@ -25,7 +25,9 @@ export default function Home() {
   return (
     <div>
       {data?.locations.results.map((item) => (
-        <p key={item.name}>{item.name}</p>
+        <p key={item.name} className="text-3xl font-bold underline">
+          {item.name}
+        </p>
       ))}
     </div>
   );
