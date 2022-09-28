@@ -1,15 +1,17 @@
 import { useQuery, gql } from "@apollo/client";
+import React, { useCallback } from "react";
 
-type Locations = {
-  locations: {
-    results: [{ name: string }];
+type Characters = {
+  characters: {
+    results: [{ name: string; image: string }];
   };
 };
 
-const GET_LOCATIONS = gql`
-  query GetLocations {
-    locations {
+const GET_CHARACTERS = gql`
+  query GetCharacters {
+    characters {
       results {
+        image
         name
       }
     }
@@ -17,15 +19,29 @@ const GET_LOCATIONS = gql`
 `;
 
 export default function Home() {
-  const { loading, error, data } = useQuery<Locations>(GET_LOCATIONS);
+  const [];
+
+  const { loading, error, data } = useQuery<Characters>(GET_CHARACTERS);
+
+  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    const { type, currentTarget } = e;
+
+    console.log(target, type, currentTarget.value);
+  }, []);
 
   if (loading) return <p>loading...</p>;
   if (error) return <p>error ;-;</p>;
 
   return (
     <div>
-      {data?.locations.results.map((item) => (
+      <input
+        type="text"
+        onChange={handleChange}
+        placeholder="Pesquise por um personagem aqui..."
+      />
+      {data?.characters.results.map((item) => (
         <p key={item.name} className="text-3xl font-bold underline">
+          <img src={item.image} alt="" />
           {item.name}
         </p>
       ))}
